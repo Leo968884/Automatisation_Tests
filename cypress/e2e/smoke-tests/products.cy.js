@@ -3,7 +3,10 @@
 describe('Smoke Test for products', () => {
 
     it('should display the products form without login', () => {
-        cy.gotoFirstProductDetails();
+        cy.fetchProducts();
+        cy.fixture('products').then((products) => {
+            cy.gotoProductDetailsById(products[0].id);
+        })
         cy.get('[data-cy="detail-product-stock"]').should('be.visible');
         cy.get('[data-cy="detail-product-add"]').should('be.visible');
         cy.get('[data-cy="detail-product-add"]').click();
@@ -14,7 +17,10 @@ describe('Smoke Test for products', () => {
         cy.fixture('user').then((user) => {
             cy.login(user);
         })
-        cy.gotoFirstProductDetails();
+        cy.fetchProducts();
+        cy.fixture('products').then((products) => {
+            cy.gotoProductDetailsById(products[0].id);
+        })
         cy.get('[data-cy="detail-product-stock"]').should('be.visible');
         cy.get('[data-cy="detail-product-add"]').should('be.visible');
         cy.get('[data-cy="detail-product-name"]').should('not.be.empty')

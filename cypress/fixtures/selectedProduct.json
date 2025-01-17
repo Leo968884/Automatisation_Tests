@@ -1,0 +1,12 @@
+{
+  "id": 5,
+  "name": "Poussière de lune",
+  "availableStock": 23,
+  "skin": "Peau grasse",
+  "aromas": "Musc",
+  "ingredients": "Huiles végétales",
+  "description": "Essayez notre savon aujourd'hui pour une expérience de bain rafraîchissante et revitalisante.",
+  "price": 9.99,
+  "picture": "https://cdn.pixabay.com/photo/2016/07/11/15/45/soap-1509963_960_720.jpg",
+  "varieties": 6
+}

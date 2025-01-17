@@ -14,7 +14,7 @@
   {
     "id": 4,
     "name": "Chuchotements d'été",
-    "availableStock": 1,
+    "availableStock": -20,
     "skin": "Sèche",
     "aromas": "Nature et végétal",
     "ingredients": "Huile d'olive, glycérine végétale",
