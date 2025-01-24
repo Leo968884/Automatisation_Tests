@@ -1,5 +1,3 @@
-// cypress/integration/products.spec.js
-
 describe('Smoke Test for products', () => {
 
     it('should display the products form without login', () => {

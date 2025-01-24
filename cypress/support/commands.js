@@ -30,16 +30,18 @@ Cypress.Commands.add('fetchProducts', () => {
 });
 
 Cypress.Commands.add('apiLogin', () => {
-    cy.request({
-        method: 'POST',
-        url: 'http://localhost:8081/login',
-        body: {
-            username: 'test2@test.fr',
-            password: 'testtest',
-        }
-    }).then((response) => {
-        authToken = response.body.token;
-        return authToken;
+    cy.fixture('user.json').then((user) => {
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:8081/login',
+            body: {
+                username: user.email,
+                password: user.password,
+            }
+        }).then((response) => {
+            const authToken = response.body.token;
+            return authToken;
+        });
     });
 });
 
@@ -85,16 +87,24 @@ Cypress.Commands.add('testQuantityLimit', (productId, productName, quantity, exp
     }
 });
 
-Cypress.Commands.add('selectProductWithStock', () => {
+function selectProductByCondition(condition) {
     cy.fetchProducts();
     cy.fixture('products').then((products) => {
-        const productWithStock = products.find(product => product.availableStock > 0);
-        if (productWithStock) {
-            cy.writeFile('cypress/fixtures/selectedProduct.json', productWithStock);
+        const selectedProduct = products.find(condition);
+        if (selectedProduct) {
+            cy.writeFile('cypress/fixtures/selectedProduct.json', selectedProduct);
         } else {
-            cy.fail('Aucun produit avec un stock positif n\'a été trouvé.');
+            cy.fail('Aucun produit correspondant à la condition n\'a été trouvé.');
         }
     });
+}
+
+Cypress.Commands.add('selectProductWithStock', () => {
+    selectProductByCondition(product => product.availableStock > 0);
+});
+
+Cypress.Commands.add('selectProductWithoutStock', () => {
+    selectProductByCondition(product => product.availableStock <= 0);
 });
 
 Cypress.Commands.add('verifyCartContent', (productId, productName, quantity) => {
