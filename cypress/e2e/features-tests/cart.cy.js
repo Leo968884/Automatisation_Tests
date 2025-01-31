@@ -26,6 +26,6 @@ describe('Feature Test for Cart', () => {
     });
 
     it('should add a product to the cart with a large quantity', function () {
-        cy.testQuantityLimit(this.selectedProduct.id, this.selectedProduct.name, 20, 1);
+        cy.testQuantityLimit(this.selectedProduct.id, this.selectedProduct.name, 21, 1);// Le test a échoué car le produit a été ajouté au panier malgré la quantité supérieure à 20 
     });
 });
