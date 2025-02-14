@@ -100,4 +100,26 @@ describe('POST Requests API Tests', () => {
             });
         });
     });
+
+    it('should not allow XSS in review comment', () => {
+        cy.apiLogin().then((token) => {
+            const xssComment = '<script>alert("XSS")</script>';
+            cy.request({
+                method: 'POST',
+                url: 'http://localhost:8081/reviews',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: {
+                    rating: 1,
+                    title: 'Bad product!',
+                    comment: xssComment
+                }
+            }).then((response) => {
+                expect(response.status).to.eq(200);
+                expect(response.body.comment).to.not.include('<script>');
+                expect(response.body.comment).to.not.include('</script>');
+            });
+        });
+    });
 });
